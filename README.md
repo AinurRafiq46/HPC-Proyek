@@ -63,3 +63,27 @@ g++ vektor.cpp -O3 -o vektor_cpp && ./vektor_cpp
 ```bash
 g++ matriks.cpp -O3 -o matriks_cpp && ./matriks_cpp
 ```
+
+# Proyek HPC: Sekuensial vs Paralel (MPI)
+
+Repositori ini berisi implementasi algoritma Perkalian Matriks dan Penjumlahan Vektor menggunakan pendekatan sekuensial dan paralel (Message Passing Interface/MPI) dalam bahasa C++ dan Rust. 
+
+Proyek ini bertujuan untuk menganalisis perbandingan waktu eksekusi (*speedup*) dan efisiensi memori (optimasi *Cache Locality*).
+
+## Prasyarat Lingkungan
+- OS: Linux / WSL2 Debian
+- C++: `g++` dan OpenMPI (`mpic++`, `mpirun`)
+- Rust: `cargo`, `rustc`, dan *crate* `mpi`
+
+## Cara Menjalankan Program
+
+### 1. Perkalian Matriks (C++)
+- **Sekuensial:** `g++ matriks.cpp -O3 -o matriks_cpp && ./matriks_cpp`
+- **MPI (4 Proses):** `mpic++ matriks_mpi.cpp -O3 -o matriks_mpi && mpirun -np 4 ./matriks_mpi`
+
+### 2. Perkalian Matriks (Rust)
+- **Sekuensial:** `cargo run --release --bin matriks`
+- **MPI (4 Proses):** `cargo build --release --bin matriks_mpi && mpirun -np 4 target/release/matriks_mpi`
+
+## Catatan Hasil (Minggu 2)
+Implementasi perkalian matriks ukuran masif ($N=2048$) dengan optimasi urutan loop `i-k-j` (*Cache Locality*) menghasilkan *speedup* lebih dari 2x lipat pada program MPI dibandingkan sekuensial, baik di C++ maupun Rust.
